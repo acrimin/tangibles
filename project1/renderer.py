@@ -23,10 +23,6 @@ class Renderer(Widget):
             self.cb = Callback(self.reset_gl_context)
         Clock.schedule_interval(self.update_glsl, 1 / 60.)
 
-        # self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
-        # self._keyboard.bind(on_key_down=self._on_keyboard_down)
-        # self._touches = []
-
     def setup_gl_context(self, *args):
         glEnable(GL_DEPTH_TEST)
 
@@ -55,47 +51,3 @@ class Renderer(Widget):
             mode='triangles',
         )
         PopMatrix()
-
-
-    # def _keyboard_closed(self):
-    #     self._keyboard.unbind(on_key_down=self._on_keyboard_down)
-    #     self._keyboard = None
-
-    # def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
-    #     if keycode[1] == 'left':
-    #         self.rotx.angle += 5
-    #     elif keycode[1] == 'right':
-    #         self.rotx.angle -= 5
-    #     if keycode[1] == 'up':
-    #         self.roty.angle += 5
-    #     elif keycode[1] == 'down':
-    #         self.roty.angle -= 5
-    #     elif keycode[1] == 'n':
-    #         self.rotx.angle = 0
-    #         self.roty.angle = 0
-
-    #     return True
-
-    
-    # def define_rotate_angle(self, touch):
-    #     x_angle = (touch.dx/self.width)*360
-    #     y_angle = -1*(touch.dy/self.height)*360
-    #     return x_angle, y_angle
-
-    # def on_touch_down(self, touch):
-    #     self._touch = touch
-    #     touch.grab(self)
-    #     self._touches.append(touch)
-
-    # def on_touch_up(self, touch): 
-    #     touch.ungrab(self)
-    #     self._touches.remove(touch)
-
-    # def on_touch_move(self, touch):
-    #     self.update_glsl
-    #     if touch in self._touches and touch.grab_current == self:
-    #         if len(self._touches) == 1:
-    #             ax, ay = self.define_rotate_angle(touch)
-
-    #             self.rotx.angle += ax
-    #             self.roty.angle += ay

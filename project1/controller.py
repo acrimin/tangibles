@@ -8,7 +8,6 @@ class Controller():
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
 
         self.renderer = kwargs['renderer']
-        self.knob = kwargs['knob']
 
         self._touches = []
 
