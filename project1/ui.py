@@ -9,40 +9,6 @@ class UI(AnchorLayout):
         super(UI, self).__init__(**kwargs)
         self.controller = kwargs['controller']
 
-        top = RenderPart(anchor_x = 'center',
-                         anchor_y = 'top',
-                         renderer = kwargs['renderer'],
-                         controller = self.controller)
-        self.add_widget(top)
-
-        bot = DialPart(anchor_x = 'right',
-                       anchor_y = 'bottom',
-                       controller = self.controller)
-        self.add_widget(bot)
-
-class DialPart(AnchorLayout):
-    def __init__(self, **kwargs):
-        super(DialPart, self).__init__(**kwargs)
-
-        knob = MyKnob(
-            size = (300, 300),
-            min = 0, max = 360,
-            step = 1,
-            show_marker = True,
-            knobimg_source = "img/knob_metal.png",
-            marker_img = "img/bline.png",
-            markeroff_color = (0.3, 0.3, .3, 1),
-            pattern_id= 99, #(ids 1 to 8, or 99 for no id)
-            debug = False,
-            obj = Scatter(),
-            controller = kwargs['controller'])
-
-        self.add_widget(knob)
-   
-
-class RenderPart(AnchorLayout):
-    def __init__(self, **kwargs):
-        super(RenderPart, self).__init__(**kwargs)
         self.controller = kwargs['controller']
         self.renderer = kwargs['renderer']
         self.add_widget(self.renderer)

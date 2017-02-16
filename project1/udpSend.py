@@ -1,13 +1,10 @@
 import socket, pickle
 
 def send(val):
-	ip = "127.0.0.1"
-	port = 5000
-	print val
-	data = pickle.dumps(val)
-	
-	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	sock.sendto(data, (ip, port))
-
-send([1, "Text", [1, 3, "text"], 5])
-
+    ip = "127.0.0.1"
+    port = 5000
+    print val
+    data = pickle.dumps(val)
+    
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.sendto(data, (ip, port))

@@ -1,6 +1,8 @@
 from kivy.core.window import Window
+import sys
 
 from ui import UI
+from internet import Internet
 
 class Controller():
     def __init__(self, **kwargs):
@@ -10,6 +12,8 @@ class Controller():
         self.renderer = kwargs['renderer']
 
         self._touches = []
+
+        Internet(function = self.listener)
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -26,6 +30,8 @@ class Controller():
             self.rotate(0,5)
         elif keycode[1] == 'n':
             self.setRotation(0,0)
+        elif keycode[1] == 'q':
+            sys.exit()
 
         return True     
 
@@ -36,3 +42,9 @@ class Controller():
     def setRotation(self, x, y):
         self.renderer.rotx.angle = x
         self.renderer.roty.angle = y
+
+
+    def listener(self, data):
+        if (data[0] == 's'):
+            self.setRotation(data[1], data[2])
+
