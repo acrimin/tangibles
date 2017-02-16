@@ -7,8 +7,9 @@ class MyKnob(Knob):
 
     # on_knob is called if value, token_id or token_placed chage
     def on_knob(self, value, pattern_id):
+    	print ("knob")
         angle = value
-        self.obj.rotation = angle
+        self.rotate(5, 0)
 
     def on_token_placed(self, instance, value):
         print "token Placed: " + str(value)
