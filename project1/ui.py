@@ -1,8 +1,5 @@
 from kivy.uix.widget import Widget
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.scatter import Scatter
-
-from myKnob import MyKnob
 
 class UI(AnchorLayout):
     def __init__(self, **kwargs):

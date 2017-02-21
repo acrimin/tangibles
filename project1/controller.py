@@ -68,7 +68,10 @@ class Controller():
     def listener(self, value, instance):
         print ("value", value, "instance:", instance)
         knob = value[2]
-        angle = int(value[7])
+        try:
+            angle = float(value[7])
+        except:
+            angle = 1
         if (knob == 1):
             self.setRotationX(angle)
         elif (knob == 2):
