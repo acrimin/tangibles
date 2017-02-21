@@ -25,7 +25,7 @@ from kivy.uix.image      import Image
 from kivy.garden.tei_knob import  Knob
 
 # Import kivy osc library
-from udpSend              import send 
+from kivy.lib.osc         import oscAPI
 
 class MyKnob(Knob):
 
@@ -64,12 +64,10 @@ class MyKnob(Knob):
         a = self.knob_angle
         p = str(True) #Token placed
 
-        if (self.knob_id == 1):
-            send(['setRotationX', a])
-        elif (self.knob_id == 2):
-            send(['setRotationY', a])
-        elif (self.knob_id == 3):
-            send(['setZoom', a])       
+
+        oscAPI.sendMsg('/tuios/tok', [s,i,x,y,z,a,p], 
+                                    ipAddr= self.ip, 
+                                    port= self.port) 
 
     # on_value is called when the angle is updated
     def on_value(self, instance, value):
@@ -105,7 +103,9 @@ class MyKnob(Knob):
         a = self.knob_angle
         p = str(self.tk_placed) 
 
-
+        oscAPI.sendMsg('/tuios/tok', [s,i,x,y,z,a,p], 
+                                    ipAddr= self.ip, 
+                                    port= self.port) 
 
         print 'tray::on_knob:sendOSCMsg ' + 'knob_id: ' + str(self.knob_id) + \
                                   ' pattern_id: ' + str(self.pattern_id) + \
@@ -118,6 +118,7 @@ class TeiKnobApp(App):
     banner_width = width - 3 * (300 + 10)
 
     def build(self):
+        oscAPI.init()
         # creates a grid layout with two columns
         root = FloatLayout(size=(self.tray_width,300), pos = (0,0))
 
