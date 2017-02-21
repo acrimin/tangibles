@@ -18,7 +18,7 @@ class Controller():
         oscAPI.init()  
         oscid = oscAPI.listen(ipAddr="127.0.0.1", port= 5000) 
         Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid), 0)
-        oscAPI.bind(oscid, self.listener, '/tuios/tok')
+        oscAPI.bind(oscid, self.dialListener, '/tuios/tok')
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -44,28 +44,45 @@ class Controller():
 
         return True     
 
+    def send(self):
+        x = self.renderer.rotx.angle
+        y = self.renderer.roty.angle
+        z = self.renderer.camera_translate[2]
+        print "sending:", x, y, z
+
+
     def rotate(self, rotX, rotY):
         self.renderer.rotx.angle += rotX
         self.renderer.roty.angle += rotY
+        self.send()
 
     def setRotationX(self, x):
         self.renderer.rotx.angle = x
+        self.send()
 
     def setRotationY(self, y):
         self.renderer.roty.angle = y
+        self.send()
 
     def setRotation(self, x, y):
         self.renderer.rotx.angle = x
         self.renderer.roty.angle = y
+        self.send()
 
-    def zoom(self, zoom):
+    def zoom(self, zoom, send=1):
         print self.renderer.camera_translate
-        self.renderer.camera_translate[2] += zoom
+        if (self.renderer.camera_translate[2] + zoom < 30 and 
+                self.renderer.camera_translate[2] + zoom > 0):
+            self.renderer.camera_translate[2] += zoom
+
+            self.send()
 
     def setZoom(self, zoom):
         self.renderer.camera_translate[2] = zoom
 
-    def listener(self, value, instance):
+        self.send()
+
+    def dialListener(self, value, instance):
         print ("value", value, "instance:", instance)
         knob = value[2]
         try:
@@ -77,4 +94,4 @@ class Controller():
         elif (knob == 2):
             self.setRotationY(angle)
         elif (knob == 3):
-            self.setZoom(angle)
+            self.setZoom(angle/360 * 30)
