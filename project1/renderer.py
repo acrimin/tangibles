@@ -21,6 +21,9 @@ class Renderer(Widget):
             self.setup_scene()
             PopMatrix()
             self.cb = Callback(self.reset_gl_context)
+        self.camera_translate = [0, 0, 0]
+        self.camera_ax = 0
+        self.camera_ay = 0
         Clock.schedule_interval(self.update_glsl, 1 / 60.)
 
     def setup_gl_context(self, *args):
@@ -35,6 +38,10 @@ class Renderer(Widget):
         self.canvas['projection_mat'] = proj
         self.canvas['diffuse_light'] = (1.0, 1.0, 0.8)
         self.canvas['ambient_light'] = (0.1, 0.1, 0.1)
+
+        mat = Matrix()
+        mat = mat.look_at(0, 0, self.camera_translate[2], 0, 0, -3, 0, 1, 0)
+        self.canvas['modelview_mat'] = mat
 
     def setup_scene(self):
         Color(1, 1, 1, 1)

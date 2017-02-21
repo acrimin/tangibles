@@ -32,7 +32,6 @@ class Internet():
             except socket.error, e:
                 err = e.args[0]
                 if err == errno.EAGAIN or err == errno.EWOULDBLOCK:
-                    sleep(.1)
                     continue
                 else:
                     print e

@@ -1,22 +1,14 @@
-###Sample Kivy program (kivy.org)
-### Alexandre Siqueira, Clemson
-### February, 2017
-#########################################
-#05 - knob_tray
-#knob tray
-#########################################
-
 from kivy.config import Config
+from win32api import GetSystemMetrics
+width = GetSystemMetrics(0)
+height = GetSystemMetrics(1)
 Config.set('graphics', 'borderless', 1)
 Config.set('graphics', 'window_state', 'visible')
 Config.set('graphics', 'resizable', 0)
 Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 0)             
-
-
-#Surface Studio
-Config.set('graphics', 'top', 1200)
-Config.set('graphics', 'width', 2250) #alas, must be called before other imports
+Config.set('graphics', 'top', height - 300)
+Config.set('graphics', 'width', width) #alas, must be called before other imports
 Config.set('graphics', 'height', 300) #1440http://kivy.org/docs/api-kivy.config.html
 
 import kivy
@@ -34,7 +26,6 @@ from kivy.garden.tei_knob import  Knob
 
 # Import kivy osc library
 from udpSend              import send 
-
 
 class MyKnob(Knob):
 
@@ -73,13 +64,12 @@ class MyKnob(Knob):
         a = self.knob_angle
         p = str(True) #Token placed
 
-        send(['s', a, 0])        
-
-        print 'tray::on_knob:sendOSCMsg ' + 'knob_id: ' + str(self.knob_id) + \
-                                  ' pattern_id: ' + str(self.pattern_id) + \
-                                  ' token_pos: ' + str(self.token_pos) + \
-                                  ' knob_angle: ' + str(self.knob_angle) + \
-                                  ' token_placed: ' + str(self.tk_placed)
+        if (self.knob_id == 1):
+            send(['setRotationX', a])
+        elif (self.knob_id == 2):
+            send(['setRotationY', a])
+        elif (self.knob_id == 3):
+            send(['setZoom', a])       
 
     # on_value is called when the angle is updated
     def on_value(self, instance, value):
@@ -124,17 +114,12 @@ class MyKnob(Knob):
                                   ' token_placed: ' + str(self.tk_placed)
 
 class TeiKnobApp(App):
-    ###Surface pro 3
-    #tray_width = 1440
-    #banner_width = 350
-
-    ###Surface Studio
-    tray_width = 2250
-    banner_width = 1310
+    tray_width = width
+    banner_width = width - 3 * (300 + 10)
 
     def build(self):
         # creates a grid layout with two columns
-    	root = FloatLayout(size=(self.tray_width,300), pos = (0,0))
+        root = FloatLayout(size=(self.tray_width,300), pos = (0,0))
 
         # Creates an image widget for the root
         root_image = Image(source='img/black.jpg', size_hint_x=None, width=self.tray_width,
@@ -152,7 +137,7 @@ class TeiKnobApp(App):
                                  pos = (0,0))
 
 
-    	knobA = MyKnob(size = (300, 300),
+        knobA = MyKnob(size = (300, 300),
                          min = 0, max = 360,
                          step = 1,
                          show_marker = True,
