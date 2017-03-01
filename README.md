@@ -8,9 +8,9 @@
     * Controlls 3D model using osc, click and drag, and tangible knobs
   * Created ui.py
     * Displays everything and controlls touch events
-* <b>Sarah Thomphson</b>
-  * <i>Tasks</i>
 * <b>Sameer Singh</b>
+  * <i>Tasks</i>
+* <b>Sarah Thomphson</b>
   * <i>Tasks</i>
 
 ## Project Description
