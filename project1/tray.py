@@ -20,6 +20,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.widget     import Widget
 from kivy.uix.scatter    import Scatter
 from kivy.uix.image      import Image
+from kivy.uix.label import Label
 
 # garden.tei_knob lib folder must exist at \.kivy\garden
 from kivy.garden.tei_knob import  Knob
@@ -71,12 +72,12 @@ class MyKnob(Knob):
 
     # on_value is called when the angle is updated
     def on_value(self, instance, value):
-        #print "token value: " + str(value)
+        print "token value: " + str(value)
         pass
 
      # on_pattern_id is called when the id is updated
     def on_pattern_id(self, instance, value):
-        #print "token id: " + str(value)
+        print "token id: " + str(value)
         pass
 
     def on_token_placed(self, instance, value):
@@ -115,11 +116,9 @@ class MyKnob(Knob):
 
 class TeiKnobApp(App):
     tray_width = width
-    banner_width = width - 3 * (300 + 10)
 
     def build(self):
         oscAPI.init()
-        # creates a grid layout with two columns
         root = FloatLayout(size=(self.tray_width,300), pos = (0,0))
 
         # Creates an image widget for the root
@@ -129,13 +128,20 @@ class TeiKnobApp(App):
                                               keep_ratio = False)
         root.add_widget(root_image)
 
-        tray = GridLayout(cols = 4, spacing = 10, padding = 0)
+        tray = GridLayout(rows = 1, cols = 4, spacing = 10, padding = 0)
 
         scatter = Scatter()
-        # Creates a MyKnob object
+ 
+	leftLabel = Label(valign="middle",
+				halign="left",
+				text="Use an appropriate token\nor three fingers to\nexplore the object\nusing the knobs",
+				italic=True,
+				color=(255, 255, 255, 0.75),
+				font_size='20sp')
+
+       # Creates a MyKnob object
         widgetA = RelativeLayout(size_hint = (None, None), 
-                                 size = (300,300),
-                                 pos = (0,0))
+                                 size = (300,300))
 
 
         knobA = MyKnob(size = (300, 300),
@@ -148,13 +154,21 @@ class TeiKnobApp(App):
                          pattern_id= 99, #(ids 1 to 8, or 99 for no id)
                          debug = False,
                          obj = scatter, # Passes the object to the knob
-                         knob_id = 001) 
+                         knob_id = 001)
+
+	labelA = Label(text = "Rotate object\nhorizontally",
+			font_size = '20sp',
+			italic = True,
+			bold = True,
+			color = (0, 0, 0, 0.75),
+			halign = "center")
+ 
         widgetA.add_widget(knobA)
+	widgetA.add_widget(labelA)
 
         # Creates a MyKnob object
         widgetB = RelativeLayout(size_hint = (None, None), 
-                                 size = (300,300),
-                                 pos = (0,0))
+                                 size = (300,300))
 
         knobB = MyKnob(size = (300, 300),
                          min = 0, max = 360,
@@ -167,12 +181,20 @@ class TeiKnobApp(App):
                          debug = False,
                          obj = scatter, # Passes the object to the knob
                          knob_id = 002) 
+
+	labelB = Label(text = "Rotate object\nvertically",
+			font_size = '20sp',
+			italic = True,
+			bold = True,
+			color = (0, 0, 0, 0.75),
+			halign = "center")
+
         widgetB.add_widget(knobB)
+	widgetB.add_widget(labelB)
 
         # Creates a MyKnob object
         widgetC = RelativeLayout(size_hint = (None, None), 
-                                 size = (300,300),
-                                 pos = (0,0))
+                                 size = (300,300))
 
 
         knobC = MyKnob(size = (300, 300),
@@ -186,17 +208,21 @@ class TeiKnobApp(App):
                          debug = False,
                          obj = scatter, # Passes the object to the knob
                          knob_id = 003) 
-        widgetC.add_widget(knobC)
 
-        # Creates an image widget
-        image = Image(source='img/black.jpg', size_hint_x=None, width=self.banner_width,
-                                              size_hint_y=None, height=300,
-                                              allow_stretch = True,
-                                              keep_ratio = False)
+	labelC = Label(text = "Zoom",
+			font_size = '20sp',
+			italic = True,
+			bold = True,
+			color = (0, 0, 0, 0.75),
+			halign = "center")
+
+        widgetC.add_widget(knobC)
+	widgetC.add_widget(labelC)
+
 
         # Adds objects to the root
-        tray.add_widget(image)
-        tray.add_widget(widgetA)
+        tray.add_widget(leftLabel)
+	tray.add_widget(widgetA)
         tray.add_widget(widgetB)
         tray.add_widget(widgetC)
         root.add_widget(tray)
