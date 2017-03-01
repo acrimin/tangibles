@@ -9,8 +9,8 @@ from kivy.clock import Clock
 class Controller():
     def __init__(self, **kwargs):
         self.sendip = sys.argv[1]
-        self.sendPort = 5001
-        self.recvPort = 5002
+        self.sendPort = 5002
+        self.recvPort = 5001
 
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
@@ -20,10 +20,6 @@ class Controller():
         self._touches = []
 
         oscAPI.init()  
-        oscid = oscAPI.listen(ipAddr="127.0.0.1", port= 5000) 
-        Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid), 0)
-        oscAPI.bind(oscid, self.dialListener, '/tuios/tok')
-
         oscid2 = oscAPI.listen(ipAddr=self.sendip, port= self.recvPort) 
         Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid2), 0)
         oscAPI.bind(oscid2, self.receive, '/tuios/tok')
@@ -101,17 +97,3 @@ class Controller():
         self.renderer.camera_translate[2] = zoom
 
         self.send()
-
-    def dialListener(self, value, instance):
-        print ("value", value, "instance:", instance)
-        knob = value[2]
-        try:
-            angle = float(value[7])
-        except:
-            angle = 1
-        if (knob == 1):
-            self.setRotationX(angle)
-        elif (knob == 2):
-            self.setRotationY(angle)
-        elif (knob == 3):
-            self.setZoom(angle/360 * 30)
