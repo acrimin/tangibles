@@ -27,21 +27,21 @@ from kivy.properties import *
 
 class Application(App):
     def build(self):  
-    root = BoxLayout(orientation="vertical", size=(width, height))
+        root = BoxLayout(orientation="vertical", size=(width, height))
 
-    topLabel = Label(valign="middle",
-                halign="left",
-                text="Here's a cool brain",
-                color=(255, 255, 255, 255),
-                font_size='40sp',
-                size_hint=(1, 0.2))
+        topLabel = Label(valign="middle",
+                    halign="left",
+                    text="Here's a cool brain",
+                    color=(255, 255, 255, 255),
+                    font_size='40sp',
+                    size_hint=(1, 0.2))
 
         renderer = Renderer()
         controller = Controller(renderer = renderer)
         ui = UI(renderer = renderer, controller = controller)
 
-    root.add_widget(topLabel)
-    root.add_widget(ui)
+        root.add_widget(topLabel)
+        root.add_widget(ui)
 
         return root
 
