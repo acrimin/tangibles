@@ -11,6 +11,8 @@
 * <b>Sameer Singh</b>
   * <i>Tasks</i>
 * <b>Sarah Thomphson</b>
-  * <i>Tasks</i>
+  * Created P1-Model2:
+    * Created receiver.py
+    * Modified tray.py
 
 ## Project Description
