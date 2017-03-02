@@ -1,9 +1,9 @@
 from kivy.config import Config
-from win32api import GetSystemMetrics
-width = GetSystemMetrics(0)
-height = GetSystemMetrics(1)
-#width = 1280
-#height = 720
+#from win32api import GetSystemMetrics
+#width = GetSystemMetrics(0)
+#height = GetSystemMetrics(1)
+width = 1280
+height = 720
 dial = 300
 times_pressed = 0
 Config.set('graphics', 'borderless', 1)
@@ -29,25 +29,58 @@ from kivy.uix.image import Image
 from kivy.animation import Animation
 from kivy.graphics.texture import Texture
 from kivy.properties import *
+from kivy.lib.osc import oscAPI
+from kivy.clock import Clock
 
 class ImageButton(ButtonBehavior, Image):
-    def on_press(self):
+    def on_other_press(self):
 	global times_pressed
-	shrink = Animation(x=10, y=10, 
+	shrink = Animation(x=10, y=-500, 
 		size_hint=(0.2, 0.2))
-	grow = Animation(x=0, y=0, 
-		size_hint=(1, 1))
+	grow = Animation(x=0, y=0-dial, 
+		size_hint=(1, 1.77))
 
 	if (times_pressed % 2 == 0): 
 		shrink.start(self)
 	else:
 		grow.start(self)
+
+	times_pressed = times_pressed + 1
+
+    def on_press(self):
+	global times_pressed
+	shrink = Animation(x=10, y=-500, 
+		size_hint=(0.2, 0.2))
+	grow = Animation(x=0, y=0-dial, 
+		size_hint=(1, 1.77))
+
+	if (times_pressed % 2 == 0): 
+		shrink.start(self)
+	else:
+		grow.start(self)
+
+	oscAPI.sendMsg('/tuios/tok', [1],
+			ipAddr="127.0.0.1",
+			port=5006)
 	
 	times_pressed = times_pressed + 1
 
 class Application(App):
+    def receive(self, value, instance):
+	if (value[2] == 1):
+		self.mainImg.on_other_press()
 
     def build(self):
+	self.sendip = "127.0.0.1"
+	self.sendPort=5006
+	self.recvPort=5007
+
+	oscAPI.init()
+	oscid = oscAPI.listen(ipAddr=self.sendip,
+				 port=self.recvPort)
+	Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid), 0)
+	oscAPI.bind(oscid, self.receive, '/tuios/tok')
+
         root = FloatLayout(size=(width, height))
 
         bottomLabel = Label(valign="middle",
@@ -58,10 +91,10 @@ class Application(App):
                     size_hint=(1, 0.2))
 
 	mainImg = ImageButton(source='img/background.jpg',
-		pos=(0,0),
+		pos=(0,0-dial),
 		keep_ratio=False,
 		allow_stretch=True,
-		size=(width, height))
+		size_hint=(1, 1.77))
 
 	self.mainImg = mainImg
 

@@ -1,9 +1,9 @@
 from kivy.config import Config
-from win32api import GetSystemMetrics
-width = GetSystemMetrics(0)
-height = GetSystemMetrics(1)
-#width = 1280
-#height = 720
+#from win32api import GetSystemMetrics
+#width = GetSystemMetrics(0)
+#height = GetSystemMetrics(1)
+width = 1280
+height = 720
 times_pressed = 0
 Config.set('graphics', 'borderless', 1)
 Config.set('graphics', 'window_state', 'visible')
@@ -33,19 +33,40 @@ from kivy.garden.tei_knob import  Knob
 
 # Import kivy osc library
 from kivy.lib.osc         import oscAPI
+from kivy.clock import Clock
 
 class ImageButton(ButtonBehavior, Image):
-    def on_press(self):
+    def on_other_press(self):
 	global times_pressed
 	shrink = Animation(x=10, y=10, 
-		size_hint=(0.1, 0.1))
+		size_hint=(0.2, 0.2))
 	grow = Animation(x=0, y=0, 
-		size_hint=(1, 1.77))
+		size_hint=(1, 2.2))
 
 	if (times_pressed % 2 == 0):
 		shrink.start(self)
 	else:
 		grow.start(self)
+
+	times_pressed = times_pressed + 1
+
+
+    def on_press(self):
+	global times_pressed
+	shrink = Animation(x=10, y=10, 
+		size_hint=(0.2, 0.2))
+	grow = Animation(x=0, y=0, 
+		size_hint=(1, 2.2))
+
+	if (times_pressed % 2 == 0):
+		shrink.start(self)
+	else:
+		grow.start(self)
+
+
+	oscAPI.sendMsg('/tuios/tok', [1],
+			ipAddr="127.0.0.1",
+			port=5007)
 
 	times_pressed = times_pressed + 1
 
@@ -138,8 +159,21 @@ class MyKnob(Knob):
 class TeiKnobApp(App):
     tray_width = width
 
+    def receive(self, value, instance):
+	if (value[2] == 1):
+		self.mainImg.on_other_press()
+
     def build(self):
+	self.sendip = "127.0.0.1"
+	self.sendPort=5007
+	self.recvPort=5006
+
         oscAPI.init()
+	oscid = oscAPI.listen(ipAddr=self.sendip,
+				 port=self.recvPort)
+	Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid), 0)
+	oscAPI.bind(oscid, self.receive, '/tuios/tok')
+
         root = FloatLayout(size=(self.tray_width,300), pos = (0,0))
 
         # Creates an image widget for the root
@@ -244,7 +278,7 @@ class TeiKnobApp(App):
 		pos=(0,0),
 		keep_ratio=False,
 		allow_stretch=True,
-		size=(width, height))
+		size_hint=(1, 2.2))
 
 	self.mainImg = mainImg
 
@@ -254,7 +288,7 @@ class TeiKnobApp(App):
         tray.add_widget(widgetB)
         tray.add_widget(widgetC)
         root.add_widget(tray)
-	#root.add_widget(mainImg)
+	root.add_widget(mainImg)
         return root
 
 TeiKnobApp().run()
