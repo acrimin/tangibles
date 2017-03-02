@@ -1,7 +1,9 @@
 from kivy.config import Config
-#from win32api import GetSystemMetrics
-width = 1280
-height = 720
+from win32api import GetSystemMetrics
+width = GetSystemMetrics(0)
+height = GetSystemMetrics(1)
+#width = 1280
+#height = 720
 dial = 300
 times_pressed = 0
 Config.set('graphics', 'borderless', 1)
