@@ -3,6 +3,8 @@
 * <b>Nick Barrs</b>
   * Updated main.py and tray.py
     * Added labels and cleaned up overal ui to make overall application more legible
+    * Attempted to create collapsible homescreen; still
+      buggy
 * <b>Drew Criminski</b>
   * Created controller.py
     * Controlls 3D model using osc, click and drag, and tangible knobs
