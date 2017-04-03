@@ -10,6 +10,9 @@
     * Controlls 3D model using osc, click and drag, and tangible knobs
   * Created ui.py
     * Displays everything and controlls touch events
+  * Fixed rendering
+    * rewrote obj file and renderer.py to work with kivy and brain model
+  
 * <b>Sameer Singh</b>
   * <i>Tasks</i>
 * <b>Sarah Thomphson</b>
