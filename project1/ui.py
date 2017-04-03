@@ -1,7 +1,7 @@
 from kivy.uix.widget import Widget
-from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.floatlayout import FloatLayout
 
-class UI(AnchorLayout):
+class UI(FloatLayout):
     def __init__(self, **kwargs):
         super(UI, self).__init__(**kwargs)
         self.controller = kwargs['controller']
@@ -17,10 +17,9 @@ class UI(AnchorLayout):
         return x_angle, y_angle  
 
     def on_touch_down(self, touch):
-        if touch.y > 310:
-            self._touch = touch
-            touch.grab(self)
-            self._touches.append(touch)
+        self._touch = touch
+        touch.grab(self)
+        self._touches.append(touch)
         
     def on_touch_up(self, touch): 
         if touch in self._touches:
@@ -31,10 +30,11 @@ class UI(AnchorLayout):
         if touch in self._touches and touch.grab_current == self:
             if len(self._touches) == 1:
                 ax, ay = self.define_rotate_angle(touch)
-                self.controller.rotate(ax, ay)
+                self.controller.rotate(ay, ax)
 
 
             elif len(self._touches) == 2: # scaling here
+                print "zoom1"
                 #use two touches to determine do we need scal
                 touch1, touch2 = self._touches 
                 old_pos1 = (touch1.x - touch1.dx, touch1.y - touch1.dy)
@@ -50,14 +50,14 @@ class UI(AnchorLayout):
                 
                 new_distance = (new_dx*new_dx + new_dy*new_dy)
                 
-                SCALE_FACTOR = 0.1
+                SCALE_FACTOR = 0.01
                 
                 if new_distance > old_distance: 
-                    scale = -1*SCALE_FACTOR
+                    scale = SCALE_FACTOR
                 elif new_distance == old_distance:
                     scale = 0
                 else:
-                    scale = SCALE_FACTOR
+                    scale = -1*SCALE_FACTOR
                 
                 if scale:
                     self.controller.zoom(scale)

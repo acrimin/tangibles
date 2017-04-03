@@ -63,8 +63,9 @@ class MyKnob(Knob):
         y = self.token_pos[1]
         z = 0
         a = self.knob_angle
-        p = str(True) #Token placed
+        p = False #Token placed
 
+        print [s,i,x,y,z,a,p]
 
         oscAPI.sendMsg('/tuios/tok', [s,i,x,y,z,a,p], 
                                     ipAddr= self.ip, 
@@ -82,11 +83,7 @@ class MyKnob(Knob):
 
     def on_token_placed(self, instance, value):
         self.tk_placed = value
-        print 'tray::on_token_placed: ' + 'knob_id: ' + str(self.knob_id) + \
-                                  ' pattern_id: ' + str(self.pattern_id) + \
-                                  ' token_pos: ' + str(self.token_pos) + \
-                                  ' knob_angle: ' + str(self.knob_angle) + \
-                                  ' token_placed: ' + str(self.tk_placed)
+        
         # Send OSC message
         ################################################
         # Simplified Tuio Message
@@ -101,18 +98,15 @@ class MyKnob(Knob):
         x = self.token_pos[0]
         y = self.token_pos[1]
         z = 0
-        a = self.knob_angle
-        p = str(self.tk_placed) 
+        a = -1
+        p = True
+
+        print [s,i,x,y,z,a,p]
 
         oscAPI.sendMsg('/tuios/tok', [s,i,x,y,z,a,p], 
                                     ipAddr= self.ip, 
                                     port= self.port) 
 
-        print 'tray::on_knob:sendOSCMsg ' + 'knob_id: ' + str(self.knob_id) + \
-                                  ' pattern_id: ' + str(self.pattern_id) + \
-                                  ' token_pos: ' + str(self.token_pos) + \
-                                  ' knob_angle: ' + str(self.knob_angle) + \
-                                  ' token_placed: ' + str(self.tk_placed)
 
 class TeiKnobApp(App):
     tray_width = width

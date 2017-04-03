@@ -17,6 +17,7 @@ class Controller():
 
         self.renderer = kwargs['renderer']
 
+        self._prevKnob = [0.,0.,0.]
         self._touches = []
 
         oscAPI.init()  
@@ -34,28 +35,28 @@ class Controller():
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'left':
-            self.rotate(-5,0)
-        elif keycode[1] == 'right':
-            self.rotate(5,0)
-        if keycode[1] == 'up':
             self.rotate(0,-5)
-        elif keycode[1] == 'down':
+        elif keycode[1] == 'right':
             self.rotate(0,5)
-        elif keycode[1] == 'n':
-            self.setRotation(0,0)
+        if keycode[1] == 'up':
+            self.rotate(-5,0)
+        elif keycode[1] == 'down':
+            self.rotate(5,0)
+        elif keycode[1] == 'r':
+            self.reset()
         elif keycode[1] == 'escape':
             sys.exit()
         elif keycode[1] == '.':
-            self.zoom(-0.1)
-        elif keycode[1] == ',':
             self.zoom(0.1)
+        elif keycode[1] == ',':
+            self.zoom(-0.1)
 
         return True     
 
     def send(self):
         x = self.renderer.rotx.angle
         y = self.renderer.roty.angle
-        z = self.renderer.camera_translate[2]
+        z = self.renderer.scale.xyz[0]
         print "sending:", x, y, z
 
         oscAPI.sendMsg('/tuios/tok', [x,y,z], 
@@ -69,49 +70,46 @@ class Controller():
 
         self.renderer.rotx.angle = x
         self.renderer.roty.angle = y
-        self.renderer.camera_translate[2] = z
+        self.renderer.scale.xyz = (z,z,z)
 
     def rotate(self, rotX, rotY):
         self.renderer.rotx.angle += rotX
         self.renderer.roty.angle += rotY
         self.send()
 
-    def setRotationX(self, x):
-        self.renderer.rotx.angle = x
-        self.send()
-
-    def setRotationY(self, y):
-        self.renderer.roty.angle = y
-        self.send()
-
-    def setRotation(self, x, y):
-        self.renderer.rotx.angle = x
-        self.renderer.roty.angle = y
-        self.send()
-
-    def zoom(self, zoom):
-        print self.renderer.camera_translate
-        if (self.renderer.camera_translate[2] + zoom < 30 and 
-                self.renderer.camera_translate[2] + zoom > 0):
-            self.renderer.camera_translate[2] += zoom
-
+    def zoom(self, scale):
+        xyz = self.renderer.scale.xyz
+        if (xyz[0] + scale > 0):
+            self.renderer.scale.xyz = tuple(p + scale for p in xyz)
             self.send()
 
-    def setZoom(self, zoom):
-        self.renderer.camera_translate[2] = zoom
-
+    def reset(self):
+        self.renderer.rotx.angle = 0
+        self.renderer.roty.angle = 0
+        self.renderer.scale.xyz = (1,1,1)
         self.send()
 
     def dialListener(self, value, instance):
-        print ("value", value, "instance:", instance)
-        knob = value[2]
-        try:
-            angle = float(value[7])
-        except:
-            angle = 1
-        if (knob == 1):
-            self.setRotationX(angle)
-        elif (knob == 2):
-            self.setRotationY(angle)
-        elif (knob == 3):
-            self.setZoom(angle/360 * 30)
+        # print ("value", value, "instance:", instance)
+        knob = value[2] - 1
+        angle = float(value[7])
+
+        if (value[8] == 1):
+            self._prevKnob[knob] = -1.
+            print "place"
+        elif (self._prevKnob[knob] == -1.):
+            self._prevKnob[knob] = angle
+            print "set"
+        else:
+            delta = angle - self._prevKnob[knob]
+            self._prevKnob[knob] = angle
+            if (abs(delta) > 100):
+                delta = 0
+            print "move:", delta
+
+            if (knob == 0):
+                self.rotate(0,delta)
+            elif (knob == 1):
+                self.rotate(delta,0)
+            elif (knob == 2):
+                self.zoom(delta*.01)
