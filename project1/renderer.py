@@ -94,7 +94,7 @@ class Renderer(Widget):
             return ChangeState(
                         Kd=color,
                         Ka=color,
-                        Ks=(.3, .3, .3),
+                        Ks=(.1, .1, .1),
                         Tr=1., Ns=1.,
                         intensity=1.,
                         id_color=[i / 255. for i in id_color],
