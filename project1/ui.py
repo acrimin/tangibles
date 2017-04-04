@@ -30,7 +30,7 @@ class UI(FloatLayout):
         if (self.scatter):
             self.remove_widget(self.scatter)
         
-        self.scatter = Scatter(height=self.scatterHeight, width=self.scatterWidth)
+        self.scatter = Scatter(do_rotation=False, do_scale=False)
 
         grid = BoxLayout(orientation='vertical',
             size_hint=(None,None),
@@ -124,7 +124,6 @@ class UI(FloatLayout):
 
 
             elif len(self._touches) == 2: # scaling here
-                print "zoom1"
                 #use two touches to determine do we need scal
                 touch1, touch2 = self._touches 
                 old_pos1 = (touch1.x - touch1.dx, touch1.y - touch1.dy)

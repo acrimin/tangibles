@@ -53,25 +53,22 @@ class Controller():
             self.zoom(0.1)
         elif keycode[1] == ',':
             self.zoom(-0.1)
+
         elif keycode[1] == 'a':
-            self.setRotation(35,-270)
-            self.ui.popup(0)
+            self.popup(35,-270,0)
         elif keycode[1] == 's':
-            self.setRotation(-20,-90)
-            self.ui.popup(1)
+            self.popup(-20,-90,1)
         elif keycode[1] == 'd':
-            self.setRotation(-30,-185)
-            self.ui.popup(2)
+            self.popup(-30,-185,2)
         elif keycode[1] == 'f':
-            self.setRotation(55,-90)
-            self.ui.popup(3)
+            self.popup(55,-90,3)
         return True     
 
-    def send(self):
+    def send(self, popup=-1):
         x = self.renderer.rotx.angle
         y = self.renderer.roty.angle
         z = self.renderer.scale.xyz[0]
-        print "sending:", x, y, z
+        print "sending:", x, y, z, popup
 
         # oscAPI.sendMsg('/tuios/tok', [x,y,z], 
         #                             ipAddr= self.sendip, 
@@ -91,10 +88,11 @@ class Controller():
         self.renderer.roty.angle += rotY
         self.send()
 
-    def setRotation(self, x, y):
+    def popup(self, x, y, pageNum):
         self.renderer.rotx.angle = x
         self.renderer.roty.angle = y
-        self.send()
+        self.ui.popup(pageNum)
+        self.send(pageNum)
 
     def zoom(self, scale):
         xyz = self.renderer.scale.xyz
