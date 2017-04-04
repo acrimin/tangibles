@@ -2,6 +2,8 @@ import sys
 if (sys.argv[1] == "vertical"):
 	dial = 0
 else:
+	from subprocess import Popen
+	Popen(["python", "tray.py"])
 	dial = 300
 
 from kivy.config import Config
