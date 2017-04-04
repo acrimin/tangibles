@@ -80,7 +80,7 @@ class Controller():
         self.renderer.scale.xyz = (z,z,z)
 
         if (p != -1):
-            self.popup(p)
+            self.popupRecv(p)
 
     def rotate(self, rotX, rotY):
         self.renderer.rotx.angle += rotX
@@ -92,6 +92,9 @@ class Controller():
         self.renderer.roty.angle = y
         self.ui.popup(pageNum)
         self.send(pageNum)
+
+    def popupRecv(self,pageNum):
+        self.ui.popup(pageNum)
 
     def zoom(self, scale):
         xyz = self.renderer.scale.xyz
