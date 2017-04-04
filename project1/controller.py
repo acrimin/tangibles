@@ -8,9 +8,7 @@ from kivy.clock import Clock
 
 class Controller():
     def __init__(self, **kwargs):
-        # self.sendip = sys.argv[1]
-        # self.sendPort = 5001
-        # self.recvPort = 5002
+        self.sendip = sys.argv[len(sys.argv)-1]
 
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
@@ -21,13 +19,10 @@ class Controller():
         self._touches = []
 
         oscAPI.init()  
-        oscid = oscAPI.listen(ipAddr="127.0.0.1", port= 5000) 
+        oscid = oscAPI.listen(ipAddr="0.0.0.0", port= 5000) 
         Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid), 0)
         oscAPI.bind(oscid, self.dialListener, '/tuios/tok')
-
-        # oscid2 = oscAPI.listen(ipAddr=self.sendip, port= self.recvPort) 
-        # Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid2), 0)
-        # oscAPI.bind(oscid2, self.receive, '/tuios/tok')
+        oscAPI.bind(oscid, self.receive, '/tuios/intra')
 
     def setUI(self, ui):
         self.ui = ui
@@ -70,9 +65,9 @@ class Controller():
         z = self.renderer.scale.xyz[0]
         print "sending:", x, y, z, popup
 
-        # oscAPI.sendMsg('/tuios/tok', [x,y,z], 
-        #                             ipAddr= self.sendip, 
-        #                             port= self.sendPort) 
+        oscAPI.sendMsg('/tuios/intra', [x,y,z,popup], 
+                                    ipAddr= self.sendip, 
+                                    port= 5000) 
 
     def receive(self, value, instance):
         x = value[2]

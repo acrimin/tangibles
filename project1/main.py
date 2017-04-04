@@ -1,8 +1,13 @@
+import sys
+if (sys.argv[1] == "vertical"):
+	dial = 0
+else:
+	dial = 300
+
 from kivy.config import Config
 from win32api import GetSystemMetrics
 width = GetSystemMetrics(0)
 height = GetSystemMetrics(1)
-dial = 300
 Config.set('graphics', 'borderless', 1)
 Config.set('graphics', 'resizable', 0)
 Config.set('graphics', 'position', 'custom')
