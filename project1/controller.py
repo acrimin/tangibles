@@ -73,10 +73,14 @@ class Controller():
         x = value[2]
         y = value[3]
         z = value[4]
+        p = value[5]
 
         self.renderer.rotx.angle = x
         self.renderer.roty.angle = y
         self.renderer.scale.xyz = (z,z,z)
+
+        if (p != -1):
+            self.popup(p)
 
     def rotate(self, rotX, rotY):
         self.renderer.rotx.angle += rotX
