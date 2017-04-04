@@ -1,3 +1,7 @@
+#
+# sourced from: https://github.com/nskrypnik/kivy-3dpicking
+#
+
 import os
 
 class MeshData(object):

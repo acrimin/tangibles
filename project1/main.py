@@ -30,6 +30,7 @@ class Application(App):
         renderer = Renderer()
         controller = Controller(renderer = renderer)
         ui = UI(renderer = renderer, controller = controller)
+        controller.setUI(ui)
 
         return ui
 

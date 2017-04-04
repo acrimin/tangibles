@@ -8,9 +8,9 @@ from kivy.clock import Clock
 
 class Controller():
     def __init__(self, **kwargs):
-        self.sendip = sys.argv[1]
-        self.sendPort = 5001
-        self.recvPort = 5002
+        # self.sendip = sys.argv[1]
+        # self.sendPort = 5001
+        # self.recvPort = 5002
 
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
@@ -25,9 +25,12 @@ class Controller():
         Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid), 0)
         oscAPI.bind(oscid, self.dialListener, '/tuios/tok')
 
-        oscid2 = oscAPI.listen(ipAddr=self.sendip, port= self.recvPort) 
-        Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid2), 0)
-        oscAPI.bind(oscid2, self.receive, '/tuios/tok')
+        # oscid2 = oscAPI.listen(ipAddr=self.sendip, port= self.recvPort) 
+        # Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid2), 0)
+        # oscAPI.bind(oscid2, self.receive, '/tuios/tok')
+
+    def setUI(self, ui):
+        self.ui = ui
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -50,7 +53,18 @@ class Controller():
             self.zoom(0.1)
         elif keycode[1] == ',':
             self.zoom(-0.1)
-
+        elif keycode[1] == 'a':
+            self.setRotation(35,-270)
+            self.ui.popup(0)
+        elif keycode[1] == 's':
+            self.setRotation(-20,-90)
+            self.ui.popup(1)
+        elif keycode[1] == 'd':
+            self.setRotation(-30,-185)
+            self.ui.popup(2)
+        elif keycode[1] == 'f':
+            self.setRotation(55,-90)
+            self.ui.popup(3)
         return True     
 
     def send(self):
@@ -59,9 +73,9 @@ class Controller():
         z = self.renderer.scale.xyz[0]
         print "sending:", x, y, z
 
-        oscAPI.sendMsg('/tuios/tok', [x,y,z], 
-                                    ipAddr= self.sendip, 
-                                    port= self.sendPort) 
+        # oscAPI.sendMsg('/tuios/tok', [x,y,z], 
+        #                             ipAddr= self.sendip, 
+        #                             port= self.sendPort) 
 
     def receive(self, value, instance):
         x = value[2]
@@ -75,6 +89,11 @@ class Controller():
     def rotate(self, rotX, rotY):
         self.renderer.rotx.angle += rotX
         self.renderer.roty.angle += rotY
+        self.send()
+
+    def setRotation(self, x, y):
+        self.renderer.rotx.angle = x
+        self.renderer.roty.angle = y
         self.send()
 
     def zoom(self, scale):
@@ -96,17 +115,13 @@ class Controller():
 
         if (value[8] == 1):
             self._prevKnob[knob] = -1.
-            print "place"
         elif (self._prevKnob[knob] == -1.):
             self._prevKnob[knob] = angle
-            print "set"
         else:
             delta = angle - self._prevKnob[knob]
             self._prevKnob[knob] = angle
             if (abs(delta) > 100):
                 delta = 0
-            print "move:", delta
-
             if (knob == 0):
                 self.rotate(0,delta)
             elif (knob == 1):
