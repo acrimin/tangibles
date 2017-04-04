@@ -77,7 +77,7 @@ class UI(FloatLayout):
         space = Label(size_hint=(None,None),size=(self.scatterWidth,30))
         grid.add_widget(space)
 
-        btn = Button(text="Close",size_hint=(None,None),size=(self.scatterWidth,20), on_press=self.closePopup)
+        btn = Button(text="Close",size_hint=(None,None),size=(self.scatterWidth,50), on_press=self.closePopup)
         grid.add_widget(btn)
 
         self.scatter.add_widget(grid)
