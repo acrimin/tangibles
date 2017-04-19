@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.getcwd() + "/lib/garden.tei_knob/")
+
 from kivy.config import Config
 from win32api import GetSystemMetrics
 width = GetSystemMetrics(0)
@@ -22,8 +26,7 @@ from kivy.uix.scatter    import Scatter
 from kivy.uix.image      import Image
 from kivy.uix.label import Label
 
-# garden.tei_knob lib folder must exist at \.kivy\garden
-from kivy.garden.tei_knob import  Knob
+from tei_knob import  Knob
 
 # Import kivy osc library
 from kivy.lib.osc         import oscAPI
