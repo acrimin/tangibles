@@ -37,6 +37,12 @@ from tei_knob import Knob
 # Import kivy osc library
 from kivy.lib.osc         import oscAPI
 
+from kivy.uix.behaviors import ButtonBehavior
+
+
+class ImageButton(ButtonBehavior, Image):
+    pass
+
 class MyKnob(Knob):
 
     #Set IP and port of receiver
@@ -166,7 +172,9 @@ class TeiKnobApp(App):
 
         widgetR = Widget()
 
-        resetb = Button(pos = (500,150), size = (75,75), valign = "top", halign ="left", text = "RESET", on_press = self.resetb) 
+        resetb = ImageButton(source = "img/reset.png", size_hint = (1, 1), 
+            allow_stretch = True,
+            keep_ratio = True, pos = (500,150), size = (100,100), valign = "top", halign ="left", text = "RESET", on_press = self.resetb) 
         # Creates a MyKnob object
         widgetR.add_widget(resetb)
         # Creates a MyKnob object
