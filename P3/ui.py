@@ -1,5 +1,3 @@
-#THIS IS A TEST COMMENT
-
 from kivy.uix.widget import Widget
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
@@ -83,6 +81,102 @@ class UI(FloatLayout):
     def closePopup(self, press):
         self.remove_widget(self.scatter)
         self.scatter = None
+    '''
+    def popup(self, pageNum):
+        if (self.scatter):
+            self.remove_widget(self.scatter)
+        
+        self.scatter = Scatter(do_rotation=False, do_scale=False)
+
+        grid = BoxLayout(orientation='vertical',
+            size_hint=(None,None),
+            height=self.scatterHeight,
+            width=self.scatterWidth)
+
+        if (pageNum == 0):
+            label5 = Label(text="Frontal Lobe",font_size='35sp', font_name='fonts/Voces-Regular.ttf', pos=(0, 300))
+            label5Wid = Widget()
+            label5Wid.add_widget(label5)
+            grid.add_widget(label5Wid)
+
+            image = Image(source="img/frontal_lobe.jpg")
+            grid.add_widget(image)
+            label6 = Label(size_hint_y=None, 
+                text_size=(self.scatterWidth,None), 
+                font_size='22sp',
+                pos=(100, 100),
+                font_name='fonts/Voces-Regular.ttf',
+                text="The frontal lobe plays a large role in voluntary movement. It houses the primary motor cortex which regulates activities like walking.")
+            label6Wid = Widget()
+            label6Wid.add_widget(label6)
+            grid.add_widget(label6Wid)
+
+        elif (pageNum == 1):
+            label5 = Label(text="Occipital Lobe",font_size='35sp', font_name='fonts/Voces-Regular.ttf', pos=(0, 300))
+            grid.add_widget(label5)
+            label5Wid = Widget()
+            label5Wid.add_widget(label5)
+            grid.add_widget(label5Wid)
+
+            image = Image(source="img/occipital_lobe.jpg")
+            grid.add_widget(image)
+            label6 = Label(size_hint_y=None, 
+                text_size=(self.scatterWidth,None), 
+                font_size='22sp',
+                pos=(100, 100),
+                font_name='fonts/Voces-Regular.ttf',
+                text="The occipital lobe is divided into several functional visual areas. Each visual area contains a full map of the visual world. Although there are no anatomical markers distinguishing these areas (except for the prominent striations in the striate cortex), physiologists have used electrode recordings to divide the cortex into different functional regions.")
+            label6Wid = Widget()
+            label6Wid.add_widget(label6)
+            grid.add_widget(label6Wid)
+
+        elif (pageNum == 2):
+            label5 = Label(text="Temporal Lobe",font_size='35sp', font_name='fonts/Voces-Regular.ttf', pos=(0, 300))
+            grid.add_widget(label5)
+            label5Wid = Widget()
+            label5Wid.add_widget(label5)
+            grid.add_widget(label5Wid)
+
+            image = Image(source="img/temporal_lobe.jpg")
+            grid.add_widget(image)
+            label6 = Label(size_hint_y=None, 
+                text_size=(self.scatterWidth,None), 
+                font_size='22sp',
+                pos=(100, 100),
+                font_name='fonts/Voces-Regular.ttf',
+                text="The temporal lobe is involved in processing sensory input into derived meanings for the appropriate retention of visual memory, language comprehension, and emotion association.")
+            label6Wid = Widget()
+            label6Wid.add_widget(label6)
+            grid.add_widget(label6Wid)
+
+        elif (pageNum == 3):
+            label5 = Label(text="Parietal Lobe",font_size='35sp', font_name='fonts/Voces-Regular.ttf', pos=(0, 300))
+            grid.add_widget(label5)
+            label5Wid = Widget()
+            label5Wid.add_widget(label5)
+            grid.add_widget(label5Wid)
+
+            image = Image(source="img/parietal_lobe.jpg")
+            grid.add_widget(image)
+            label6 = Label(size_hint_y=None, 
+                text_size=(self.scatterWidth,None), 
+                font_size='22sp',
+                pos=(100, 100),
+                font_name='fonts/Voces-Regular.ttf',
+                text="The parietal lobe integrates sensory information among various modalities, including spatial sense and navigation (proprioception), the main sensory receptive area for the sense of touch (mechanoreception) in the somatosensory cortex which is just posterior to the central sulcus in the postcentral gyrus,[1] and the dorsal stream of the visual system.")
+            label6Wid = Widget()
+            label6Wid.add_widget(label6)
+            grid.add_widget(label6Wid)
+        
+        space = Label(size_hint=(None,None),size=(self.scatterWidth,30))
+        grid.add_widget(space)
+
+        btn = Button(text="Close",size_hint=(None,None),size=(self.scatterWidth,50), on_press=self.closePopup)
+        grid.add_widget(btn)
+
+        self.scatter.add_widget(grid)
+        self.add_widget(self.scatter)
+        '''
 
     def popup(self, pageNum):
         if (self.scatter):
@@ -96,41 +190,41 @@ class UI(FloatLayout):
             width=self.scatterWidth)
 
         if (pageNum == 0):
-            label5 = Label(text="Frontal Lobe",font_size='20sp')
-            grid.add_widget(label5)
+            label = Label(text="Frontal Lobe",font_size='20sp')
+            grid.add_widget(label)
             image = Image(source="img/frontal_lobe.jpg")
             grid.add_widget(image)
-            label6 = Label(size_hint_y=None, 
+            label1 = Label(size_hint_y=None, 
                 text_size=(self.scatterWidth,None), 
                 text="The frontal lobe plays a large role in voluntary movement. It houses the primary motor cortex which regulates activities like walking.")
-            grid.add_widget(label6)
+            grid.add_widget(label1)
         elif (pageNum == 1):
-            label5 = Label(text="Occipital Lobe",font_size='20sp')
-            grid.add_widget(label5)
+            label = Label(text="Occipital Lobe",font_size='20sp')
+            grid.add_widget(label)
             image = Image(source="img/occipital_lobe.jpg")
             grid.add_widget(image)
-            label6 = Label(size_hint_y=None, 
+            label1 = Label(size_hint_y=None, 
                 text_size=(self.scatterWidth,None), 
                 text="The occipital lobe is divided into several functional visual areas. Each visual area contains a full map of the visual world. Although there are no anatomical markers distinguishing these areas (except for the prominent striations in the striate cortex), physiologists have used electrode recordings to divide the cortex into different functional regions.")
-            grid.add_widget(label6)
+            grid.add_widget(label1)
         elif (pageNum == 2):
-            label5 = Label(text="Temporal Lobe",font_size='20sp')
-            grid.add_widget(label5)
+            label = Label(text="Temporal Lobe",font_size='20sp')
+            grid.add_widget(label)
             image = Image(source="img/temporal_lobe.jpg")
             grid.add_widget(image)
-            label6 = Label(size_hint_y=None, 
+            label1 = Label(size_hint_y=None, 
                 text_size=(self.scatterWidth,None), 
                 text="The temporal lobe is involved in processing sensory input into derived meanings for the appropriate retention of visual memory, language comprehension, and emotion association.")
-            grid.add_widget(label6)
+            grid.add_widget(label1)
         elif (pageNum == 3):
-            label5 = Label(text="Parietal Lobe",font_size='20sp')
-            grid.add_widget(label5)
+            label = Label(text="Parietal Lobe",font_size='20sp')
+            grid.add_widget(label)
             image = Image(source="img/parietal_lobe.jpg")
             grid.add_widget(image)
-            label6 = Label(size_hint_y=None, 
+            label1 = Label(size_hint_y=None, 
                 text_size=(self.scatterWidth,None), 
                 text="The parietal lobe integrates sensory information among various modalities, including spatial sense and navigation (proprioception), the main sensory receptive area for the sense of touch (mechanoreception) in the somatosensory cortex which is just posterior to the central sulcus in the postcentral gyrus,[1] and the dorsal stream of the visual system.")
-            grid.add_widget(label6)
+            grid.add_widget(label1)
         
         space = Label(size_hint=(None,None),size=(self.scatterWidth,30))
         grid.add_widget(space)
