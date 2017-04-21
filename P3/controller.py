@@ -23,6 +23,11 @@ class Controller():
         Clock.schedule_interval(lambda *x: oscAPI.readQueue(oscid), 0)
         oscAPI.bind(oscid, self.dialListener, '/tuios/tok')
         oscAPI.bind(oscid, self.receive, '/tuios/intra')
+        oscAPI.bind(oscid, self.receiveVid, '/tuios/video')
+
+    def receiveVid(self, value, instance):
+        print value[2]
+        print value[3]
 
     def setUI(self, ui):
         self.ui = ui

@@ -28,8 +28,14 @@ class UI(FloatLayout):
     stop = 0
     vid_pos = (720,200)
 
+    self.controller = kwargs['controller']
+
+    def sendVid(self, start, stop, value):
+        oscAPI.sendMsg('/tuios/video', [start, stop, value], 
+                    ipAddr= self.controller.sendip, 
+                    port= 5000) 
+
     def playVideo(self, start, stop, value):
-        print "THIS BUTTON WORKS"
         self.start = start
         self.stop = stop
         try:
@@ -133,7 +139,7 @@ class UI(FloatLayout):
         # Basic facts about the brain
         self.widget1 = Widget(pos = (0, 0), size=(300, 300))
         button1 = Button(background_normal='Tile1/Vid-2.png', size=self.widget1.size, pos = self.widget1.pos)
-        button1.bind(on_press=partial(self.playVideo, 0, 12))
+        button1.bind(on_press=partial(self.sendVid, 0, 12))
         self.widget1.add_widget(button1)
 
         # weight of brain
@@ -215,15 +221,14 @@ class UI(FloatLayout):
         self.vid1_scatter.add_widget(self.video)
         self.vid1_wid.add_widget(self.vid1_scatter)
 
-        # Button widgets
-        self.add_widget(self.widget1)
-        self.add_widget(self.widget2)
-
         if self.screenType == "vertical":
             self.add_widget(self.vid1_wid)
             self.add_widget(self.renderer)
         else:
             self.video.volume = 0
+            # Button widgets
+            self.add_widget(self.widget1)
+            self.add_widget(self.widget2)
 
         # add label widgets to the main layout 
         self.add_widget(self.label1Wid)
