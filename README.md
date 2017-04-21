@@ -14,7 +14,7 @@
     * rewrote obj file and renderer.py to work with kivy and brain model
   
 * <b>Sameer Singh</b>
-     Updated new functionalities as per user feedback
+     * Updated new functionalities as per user feedback
      * Updated controller.py and tray.py
      * Added a Reset button to reset the position of the brain model and the knobs to it's original state.
 * <b>Sarah Thomphson</b>
