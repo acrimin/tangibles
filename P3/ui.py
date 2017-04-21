@@ -28,7 +28,7 @@ class UI(FloatLayout):
     stop = 0
     vid_pos = (720,200)
 
-    self.controller = kwargs['controller']
+    self.controller = null
 
     def sendVid(self, start, stop, value):
         oscAPI.sendMsg('/tuios/video', [start, stop, value], 
