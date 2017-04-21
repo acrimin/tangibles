@@ -28,7 +28,7 @@ class Controller():
     def receiveVid(self, value, instance):
         print value[2]
         print value[3]
-        #self.ui.playVideo(value[2], value[3])
+        self.ui.playVideo(value[2], value[3], value[1])
 
     def setUI(self, ui):
         self.ui = ui

@@ -28,7 +28,7 @@ class UI(FloatLayout):
     stop = 0
     vid_pos = (720,200)
 
-    self.controller = null
+    controller = None
 
     def sendVid(self, start, stop, value):
         oscAPI.sendMsg('/tuios/video', [start, stop, value], 
@@ -145,7 +145,7 @@ class UI(FloatLayout):
         # weight of brain
         self.widget2 = Widget(pos = (0, 300), size=(300, 300))
         button2 = Button(background_normal='Tile1/Vid-3.png', size=self.widget2.size, pos = self.widget2.pos)
-        button2.bind(on_press=partial(self.playVideo, 13, 21))
+        button2.bind(on_press=partial(self.sendVid, 13, 21))
         self.widget2.add_widget(button2)
         
         # Brain is protected by bones, meninges, and spinal fluid
