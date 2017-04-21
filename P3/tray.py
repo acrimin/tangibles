@@ -122,7 +122,7 @@ class TeiKnobApp(App):
     def build(self):
         oscAPI.init()
         root = FloatLayout(size=(self.tray_width,300), pos = (0,0))
-
+        #sameer
         # Creates an image widget for the root
         '''root_image = Image(source='img/black.jpg', size_hint_x=None, width=self.tray_width,
                                               size_hint_y=None, height=300,
