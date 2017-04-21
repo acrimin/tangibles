@@ -110,8 +110,13 @@ class Controller():
 
     def dialListener(self, value, instance):
         # print ("value", value, "instance:", instance)
+        print "dialListener"
+        print ("value", value, "instance:", instance)
+
         knob = value[2] - 1
         angle = float(value[7])
+
+        print "angle: " + str(angle)
 
         if (value[8] == 1):
             self._prevKnob[knob] = -1.
@@ -119,12 +124,17 @@ class Controller():
             self._prevKnob[knob] = angle
         else:
             delta = angle - self._prevKnob[knob]
-            self._prevKnob[knob] = angle
-            if (abs(delta) > 100):
-                delta = 0
-            if (knob == 0):
-                self.rotate(0,delta)
-            elif (knob == 1):
-                self.rotate(delta,0)
-            elif (knob == 2):
-                self.zoom(delta*.01)
+            print "delta"
+            print delta
+            if delta == 999:
+                self.reset()
+            else:
+                self._prevKnob[knob] = angle
+                if (abs(delta) > 100):
+                    delta = 0
+                if (knob == 0):
+                    self.rotate(0,delta)
+                elif (knob == 1):
+                    self.rotate(delta,0)
+                elif (knob == 2):
+                    self.zoom(delta*.01)

@@ -27,6 +27,7 @@ from kivy.uix.widget     import Widget
 from kivy.uix.scatter    import Scatter
 from kivy.uix.image      import Image
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 
 # garden.tei_knob lib folder must exist at \.kivy\garden
 #from kivy.garden.tei_knob import  Knob
@@ -119,6 +120,14 @@ class MyKnob(Knob):
 class TeiKnobApp(App):
     tray_width = width
 
+    def resetb(self, instance):
+        self.knobA.on_knob(-999,self.knobA.knob_id)
+        self.knobA.value = 0
+        self.knobB.on_knob(-999,self.knobB.knob_id)
+        self.knobB.value = 0
+        self.knobC.on_knob(-999,self.knobC.knob_id)
+        self.knobC.value = 0
+
     def build(self):
         oscAPI.init()
         root = FloatLayout(size=(self.tray_width,300), pos = (0,0))
@@ -137,7 +146,7 @@ class TeiKnobApp(App):
         #----------------------
         root.add_widget(root_image)
 
-        tray = GridLayout(rows = 1, cols = 4, spacing = 10, padding = 0)
+        tray = GridLayout(rows = 1, cols = 5, spacing = 10, padding = 0)
 
         scatter = Scatter()
 
@@ -154,12 +163,18 @@ class TeiKnobApp(App):
         infoLabelWid.add_widget(infoLabel)
         #----------------------
 
+
+        widgetR = Widget()
+
+        resetb = Button(pos = (500,150), size = (75,75), valign = "top", halign ="left", text = "RESET", on_press = self.resetb) 
+        # Creates a MyKnob object
+        widgetR.add_widget(resetb)
         # Creates a MyKnob object
         widgetA = RelativeLayout(size_hint = (None, None), 
                                  size = (300,300))
 
 
-        knobA = MyKnob(size = (300, 300),
+        self.knobA = MyKnob(size = (300, 300),
                          min = 0, max = 360,
                          step = 1,
                          show_marker = True,
@@ -171,13 +186,13 @@ class TeiKnobApp(App):
                          obj = scatter, # Passes the object to the knob
                          knob_id = 001)
 
-        widgetA.add_widget(knobA)
+        widgetA.add_widget(self.knobA)
 
         # Creates a MyKnob object
         widgetB = RelativeLayout(size_hint = (None, None), 
                                  size = (300,300))
 
-        knobB = MyKnob(size = (300, 300),
+        self.knobB = MyKnob(size = (300, 300),
                          min = 0, max = 360,
                          step = 1,
                          show_marker = True,
@@ -189,14 +204,14 @@ class TeiKnobApp(App):
                          obj = scatter, # Passes the object to the knob
                          knob_id = 002) 
 
-        widgetB.add_widget(knobB)
+        widgetB.add_widget(self.knobB)
 
         # Creates a MyKnob object
         widgetC = RelativeLayout(size_hint = (None, None), 
                                  size = (300,300))
 
 
-        knobC = MyKnob(size = (300, 300),
+        self.knobC = MyKnob(size = (300, 300),
                          min = 0, max = 360,
                          step = 1,
                          show_marker = True,
@@ -208,11 +223,12 @@ class TeiKnobApp(App):
                          obj = scatter, # Passes the object to the knob
                          knob_id = 003) 
 
-        widgetC.add_widget(knobC)
+        widgetC.add_widget(self.knobC)
 
         # Adds objects to the root
         tray.add_widget(infoLabelWid)
         #tray.add_widget(infoLabel)
+        tray.add_widget(widgetR)
         tray.add_widget(widgetA)
         tray.add_widget(widgetB)
         tray.add_widget(widgetC)
