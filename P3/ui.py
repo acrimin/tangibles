@@ -152,13 +152,13 @@ class UI(FloatLayout):
         # Brain is protected by bones, meninges, and spinal fluid
         self.widget3 = Widget(pos = (600+300, 500), size=(300, 300))
         button3 = Button(background_normal='Tile1/Vid-4.png', size=self.widget3.size, pos = self.widget3.pos)
-        button3.bind(on_press=partial(self.sendVid, 22, 33))
+        button3.bind(on_press=partial(self.sendVid, 24, 33))
         self.widget3.add_widget(button3)
         
         # brain has 3 parts: fore brain, mid brain, and hind brain
         self.widget4 = Widget(pos = (600+300, 200), size=(300, 300))
         button4 = Button(background_normal='Tile1/Vid-5.png', size=self.widget4.size, pos = self.widget4.pos)
-        button4.bind(on_press=partial(self.sendVid, 34, 61))
+        button4.bind(on_press=partial(self.sendVid, 37, 61))
         self.widget4.add_widget(button4)
 
         '''########################### 6 6 6
@@ -191,13 +191,13 @@ class UI(FloatLayout):
         # Cerebellum... balance, movements, coordination
         self.widget9 = Widget(pos = (600+600, 200), size=(300, 300))
         button9 = Button(background_normal='Tile1/Vid-10.png', size=self.widget9.size, pos = self.widget9.pos)
-        button9.bind(on_press=partial(self.sendVid, 96, 106))
+        button9.bind(on_press=partial(self.sendVid, 98, 106))
         self.widget9.add_widget(button9)
         
         # Pons and Medulla / midbrain .. breathing, heart rate, blood pressure, swallowing, digestion, and blinking
         self.widget10 = Widget(pos = (600+900, 350), size=(300, 300))
         button10 = Button(background_normal='Tile1/Vid-11.png', size=self.widget10.size, pos = self.widget10.pos)
-        button10.bind(on_press=partial(self.sendVid, 106, 141))
+        button10.bind(on_press=partial(self.sendVid, 107, 141))
         self.widget10.add_widget(button10)
 
         '''########################### 12 12 12 
