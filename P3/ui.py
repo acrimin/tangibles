@@ -136,75 +136,76 @@ class UI(FloatLayout):
         self.label4Wid = Widget(pos = (0, 0), size=(self.label4.size))
         self.label4Wid.add_widget(self.label4)
 
-        # Basic facts about the brain
-        self.widget1 = Widget(pos = (0, 0), size=(300, 300))
+
+        # Video clips about the brain
+        self.widget1 = Widget(pos = (600, 500), size=(300, 300))
         button1 = Button(background_normal='Tile1/Vid-2.png', size=self.widget1.size, pos = self.widget1.pos)
         button1.bind(on_press=partial(self.sendVid, 0, 12))
         self.widget1.add_widget(button1)
 
         # weight of brain
-        self.widget2 = Widget(pos = (0, 300), size=(300, 300))
+        self.widget2 = Widget(pos = (600, 200), size=(300, 300))
         button2 = Button(background_normal='Tile1/Vid-3.png', size=self.widget2.size, pos = self.widget2.pos)
         button2.bind(on_press=partial(self.sendVid, 13, 21))
         self.widget2.add_widget(button2)
         
         # Brain is protected by bones, meninges, and spinal fluid
-        self.widget3 = Widget(pos = (0, 0), size=(300, 300))
-        button3 = Button(background_normal='Tile1/Vid-4.png', size=self.widget3.size, pos = (0, 300))
-        button3.bind(on_press=partial(self.playVideo, 22, 33))
+        self.widget3 = Widget(pos = (600+300, 500), size=(300, 300))
+        button3 = Button(background_normal='Tile1/Vid-4.png', size=self.widget3.size, pos = self.widget3.pos)
+        button3.bind(on_press=partial(self.sendVid, 22, 33))
         self.widget3.add_widget(button3)
         
         # brain has 3 parts: fore brain, mid brain, and hind brain
-        self.widget4 = Widget(pos = (0, 0), size=(300, 300))
-        button4 = Button(background_normal='Tile1/Vid-5.png', size=self.widget4.size, pos = (0, 300))
-        button4.bind(on_press=partial(self.playVideo, 34, 41))
+        self.widget4 = Widget(pos = (600+300, 200), size=(300, 300))
+        button4 = Button(background_normal='Tile1/Vid-5.png', size=self.widget4.size, pos = self.widget4.pos)
+        button4.bind(on_press=partial(self.sendVid, 34, 61))
         self.widget4.add_widget(button4)
 
-        ########################### 6 6 6
+        '''########################### 6 6 6
         # Fore brain
         self.widget5 = Widget(pos = (0, 0), size=(300, 300))
         button5 = Button(background_normal='Tile1/Vid-6.png', size=self.widget5.size, pos = (0, 300))
-        button5.bind(on_press=partial(self.playVideo, 41, 61))
-        self.widget5.add_widget(button5)
+        button5.bind(on_press=partial(self.sendVid, 41, 61))
+        self.widget5.add_widget(button5)'''
         
         # The Cerebrum...
-        self.widget6 = Widget(pos = (0, 0), size=(300, 300))
-        button6 = Button(background_normal='Tile1/Vid-7.png', size=self.widget6.size, pos = (0, 300))
-        button6.bind(on_press=partial(self.playVideo, 61, 78))
+        self.widget6 = Widget(pos = (600+600, 500), size=(300, 300))
+        button6 = Button(background_normal='Tile1/Vid-7.png', size=self.widget6.size, pos = self.widget6.pos)
+        button6.bind(on_press=partial(self.sendVid, 61,96))
         self.widget6.add_widget(button6)
         
-        ########################### 8 8 8
+        '''########################### 8 8 8
         # Mid brain
         self.widget7 = Widget(pos = (0, 0), size=(300, 300))
-        button7 = Button(background_normal='Tile1/Vid-8.png', size=self.widget7.size, pos = (0, 300))
-        button7.bind(on_press=partial(self.playVideo, 78, 89))
+        button7 = Button(background_normal='Tile1/Vid-8.png', size=self.widget7.size, pos = self.widget7.pos)
+        button7.bind(on_press=partial(self.sendVid, 78, 89))
         self.widget7.add_widget(button7)
 
         ########################### 9 9 9
         # Hind brain
         self.widget8 = Widget(pos = (0, 0), size=(300, 300))
-        button8 = Button(background_normal='Tile1/Vid-9.png', size=self.widget8.size, pos = (0, 300))
-        button8.bind(on_press=partial(self.playVideo, 89, 89))
-        self.widget8.add_widget(button8)
+        button8 = Button(background_normal='Tile1/Vid-9.png', size=self.widget8.size, pos = self.widget8.pos)
+        button8.bind(on_press=partial(self.sendVid, 89, 96))
+        self.widget8.add_widget(button8)'''
         
         # Cerebellum... balance, movements, coordination
-        self.widget9 = Widget(pos = (0, 0), size=(300, 300))
-        button9 = Button(background_normal='Tile1/Vid-10.png', size=self.widget9.size, pos = (0, 300))
-        button9.bind(on_press=partial(self.playVideo, 96, 106))
+        self.widget9 = Widget(pos = (600+600, 200), size=(300, 300))
+        button9 = Button(background_normal='Tile1/Vid-10.png', size=self.widget9.size, pos = self.widget9.pos)
+        button9.bind(on_press=partial(self.sendVid, 96, 106))
         self.widget9.add_widget(button9)
         
         # Pons and Medulla / midbrain .. breathing, heart rate, blood pressure, swallowing, digestion, and blinking
-        self.widget10 = Widget(pos = (0, 0), size=(300, 300))
-        button10 = Button(background_normal='Tile1/Vid-11.png', size=self.widget10.size, pos = (0, 300))
-        button10.bind(on_press=partial(self.playVideo, 106, 126))
+        self.widget10 = Widget(pos = (600+900, 350), size=(300, 300))
+        button10 = Button(background_normal='Tile1/Vid-11.png', size=self.widget10.size, pos = self.widget10.pos)
+        button10.bind(on_press=partial(self.sendVid, 106, 141))
         self.widget10.add_widget(button10)
 
-        ########################### 12 12 12 
+        '''########################### 12 12 12 
         # Different centres of our brain -- video summary
         widget11 = Widget(pos = (0, 0), size=(300, 300))
-        button11 = Button(ackground_normal='Tile1/Vid-12.png', size=widget11.size, pos = (0, 300))
-        button11.bind(on_press=partial(self.playVideo, 126, 126))
-        widget11.add_widget(button11)
+        button11 = Button(ackground_normal='Tile1/Vid-12.png', size=widget11.size, pos = self.widget11.pos)
+        button11.bind(on_press=partial(self.sendVid, 126, 141))
+        widget11.add_widget(button11)'''
 
         self.video = Video(size = (800,800), pos=(0,0), volume=1.0, 
                          options={'eos': 'loop'}, allow_stretch = True,
@@ -229,6 +230,11 @@ class UI(FloatLayout):
             # Button widgets
             self.add_widget(self.widget1)
             self.add_widget(self.widget2)
+            self.add_widget(self.widget3)
+            self.add_widget(self.widget4)
+            self.add_widget(self.widget6)
+            self.add_widget(self.widget9)
+            self.add_widget(self.widget10)
 
         # add label widgets to the main layout 
         self.add_widget(self.label1Wid)
